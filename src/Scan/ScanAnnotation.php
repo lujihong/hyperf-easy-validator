@@ -14,7 +14,7 @@ use Hyperf\EasyValidator\Annotation\FormData;
 use Hyperf\EasyValidator\Annotation\Header;
 use Hyperf\EasyValidator\Annotation\Query;
 use Hyperf\EasyValidator\Exception\EasyValidatorException;
-use Hyperf\EasyValidator\generator\VoGenerator;
+use Hyperf\EasyValidator\Generator\VoGenerator;
 use Psr\Container\ContainerInterface;
 
 use ReflectionException;

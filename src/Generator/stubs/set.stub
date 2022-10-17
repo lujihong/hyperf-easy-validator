@@ -1,0 +1,6 @@
+
+    public function set{METHOD_NAME}({TYPE} ${ATTR}): {CLASS_NAME}
+    {
+        $this->{ATTR} = ${ATTR};
+        return $this;
+    }

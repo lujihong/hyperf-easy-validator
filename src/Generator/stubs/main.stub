@@ -1,0 +1,22 @@
+<?php
+declare(strict_types=1);
+
+namespace {NAMESPACE};
+{USE_UPLOAD}
+use Hyperf\EasyValidator\Vo\BaseVo;
+
+class {CLASS_NAME} extends BaseVo
+{
+    {ATTRIBUTES}
+
+    /**
+     * 从request对象中初始化所有属性值
+     * @return $this
+     */
+    public function init(): {CLASS_NAME}
+    {
+        $this->_init();
+        return $this;
+    }
+    {FUNCTIONS}
+}

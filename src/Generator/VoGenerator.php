@@ -141,8 +141,8 @@ class VoGenerator
         $str = '';
         foreach ($this->fields as $field) {
             $str .= str_replace(
-                ['{ATTR}', '{TYPE}'],
-                [$field['name'], ($field['type'] === 'file' ? 'UploadedFile' : $field['type'])],
+                ['{ATTR}', '{TYPE}', '{DEFAULT_VALUE}'],
+                [$field['name'], ($field['type'] === 'file' ? '?UploadedFile' : '?' . $field['type']), 'null'],
                 $attrTemplate
             );
         }
@@ -158,13 +158,13 @@ class VoGenerator
         foreach ($this->fields as $field) {
             $getString .= str_replace(
                 ['{METHOD_NAME}', '{ATTR}', '{TYPE}'],
-                [ucfirst($field['name']), $field['name'], ($field['type'] === 'file' ? 'UploadedFile' : $field['type'])],
+                [ucfirst($field['name']), $field['name'], ($field['type'] === 'file' ? '?UploadedFile' : '?' . $field['type'])],
                 $getTemplate
             );
 
             $setString .= str_replace(
                 ['{METHOD_NAME}', '{ATTR}', '{CLASS_NAME}', '{TYPE}'],
-                [ucfirst($field['name']), $field['name'], $this->getClassName(), ($field['type'] === 'file' ? 'UploadedFile' : $field['type'])],
+                [ucfirst($field['name']), $field['name'], 'self', ($field['type'] === 'file' ? 'UploadedFile' : $field['type'])],
                 $setTemplate
             );
         }

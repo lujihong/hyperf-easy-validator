@@ -1,2 +1,2 @@
 
-    protected {TYPE} ${ATTR};
+    protected {TYPE} ${ATTR} = {DEFAULT_VALUE};

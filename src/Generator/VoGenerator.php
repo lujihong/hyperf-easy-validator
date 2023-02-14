@@ -156,15 +156,20 @@ class VoGenerator
 
         $getString = $setString = '';
         foreach ($this->fields as $field) {
+            $str = str_replace('_', ' ', $field['name']);
+            $str = str_replace('-', ' ', $str);
+            $str = ucwords($str);
+            $funcName = str_replace(' ', '', $str);
+
             $getString .= str_replace(
                 ['{METHOD_NAME}', '{ATTR}', '{TYPE}'],
-                [ucfirst($field['name']), $field['name'], ($field['type'] === 'file' ? '?UploadedFile' : '?' . $field['type'])],
+                [$funcName, $field['name'], ($field['type'] === 'file' ? '?UploadedFile' : '?' . $field['type'])],
                 $getTemplate
             );
 
             $setString .= str_replace(
                 ['{METHOD_NAME}', '{ATTR}', '{CLASS_NAME}', '{TYPE}'],
-                [ucfirst($field['name']), $field['name'], 'self', ($field['type'] === 'file' ? 'UploadedFile' : $field['type'])],
+                [$funcName, $field['name'], 'self', ($field['type'] === 'file' ? 'UploadedFile' : $field['type'])],
                 $setTemplate
             );
         }

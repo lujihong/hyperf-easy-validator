@@ -4,7 +4,7 @@
 
 ##### 优点
 
-- 根据注解自动生成Vo类，支持类型限定
+- 根据注解自动生成Vo类，自动获取并转换request参数类型
 - 支持框架数据验证器，自定义验证规则
 
 ## 注意
@@ -22,10 +22,15 @@ composer require lujihong/easy-validator
 ### 控制器
 
 ```php
+declare(strict_types=1);
+
+namespace Api\Controller;
+
 use Hyperf\EasyValidator\Annotation\Body;
 use Hyperf\EasyValidator\Annotation\FormData;
 use Hyperf\EasyValidator\Annotation\Query;
 use Hyperf\EasyValidator\Annotation\Header;
+use Api\Vo\Demo\DemoEditVo; //自动生成的Vo类
 
 #[Controller(prefix: '/demo')]
 class DemoController extends AbstractController
@@ -43,12 +48,27 @@ class DemoController extends AbstractController
     #[
         PutMapping(path: 'edit'),
         Header(key: 'Token|token', rule: 'required'),
-        Body(key: 'test|测试', rule: 'required'),
-        Body(key: 'test1|测试1', rule: 'required'),
+        Body(key: 'test|测试', rule: 'required', fieldType: 'int'),
+        Body(key: 'test1|测试1', rule: 'required', fieldType: 'string'),
     ]
     public function edit()
     {
-    
+        $vo = new DemoEditVo();、
+        
+        //从request请求中获取请求参数
+        $vo->getAttributes();//获取所有属性，包含ip
+        $vo->getIp();//获取Ip
+        $vo->getTest();//获取测试字段值，已自动转换成int类型
+        $vo->getTest1();//获取测试1字段值，已自动转换成string类型
+        
+        //自定义request参数值
+        $changeVal = 2;
+        $vo->setTest($changeVal);
+        $vo->getTest();//此时值已变为2
+        
+        //设置其他自定义参数
+        $vo->setOther(['foo_field' => '测试值']);
+        $vo->getOther();//获取设置的其他值
     }
 
     #[
@@ -76,7 +96,7 @@ class DemoController extends AbstractController
 ```
 
 ### Vo类
-- fieldType，用于生成Vo类的类型限定，不设置此参数则不生成Vo属性
+- fieldType，用于生成Vo类的类型限定，所有字段均不设置则不生成Vo类
 > 支持的值为：string | array | bool | int | float | file
 
 ### 验证器

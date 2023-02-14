@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 return [
     // enable false 将不会生成 Vo 文件
-    'enable' => env('APP_ENV') !== 'production',
+    'enable' => env('APP_ENV') !== 'production' || env('APP_ENV') !== 'prod',
 
     // 自定义验证器错误码、错误描述字段
     'error_code' => 400,
@@ -16,7 +16,7 @@ return [
     // 跟注解相同, 支持 header, query, body, formData
     'global' => [
         // 'header' => [
-        //     "x-token|验签" => "required|cb_token"
+        //     "x-token|验签" => "required|token"
         // ],
         // 'query' => [
         //     [

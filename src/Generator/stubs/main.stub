@@ -9,11 +9,18 @@ class {CLASS_NAME} extends BaseVo
 {
     {ATTRIBUTES}
 
+    public function __construct(bool $initData = true)
+    {
+        if($initData) {
+            $this->init();
+        }
+    }
+
     /**
      * 从request对象中初始化所有属性值
      * @return $this
      */
-    public function init(): {CLASS_NAME}
+    public function init(): self
     {
         $this->_init();
         return $this;

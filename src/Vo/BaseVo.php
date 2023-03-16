@@ -81,8 +81,8 @@ class BaseVo
         $str = ucwords($str);
         $method = 'set' . str_replace(' ', '', $str);
         $classInfo = ReflectionManager::reflectClass($this::class);
-        $type = $classInfo?->getProperty($field)?->getType()?->getName();
-        if (method_exists($this, $method)) {
+        if (method_exists($this, $method) && property_exists($this, $field)) {
+            $type = $classInfo?->getProperty($field)?->getType()?->getName();
             $value = match ($type) {
                 'string' => (string)$value,
                 'int' => (int)$value,
